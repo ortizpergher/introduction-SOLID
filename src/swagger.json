@@ -1,0 +1,216 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Documentation",
+    "description": "This is an API for users",
+    "version": "1.0.0",
+    "contact": {
+      "email": "ortiz@gmail.com"
+    }
+  },
+  "tags": [{
+    "name": "users",
+    "description": "Manage users"
+  }],
+  "paths": {
+    "/users": {
+      "post": {
+        "tag": ["users"],
+        "summary": "Create a user",
+        "description": "Create a new user",
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Created a user",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "required": true
+              },
+              "email": {
+                "type": "string",
+                "required": true
+              },
+              "admin": {
+                "type": "boolean",
+                "required": false
+              }
+            },
+            "example": {
+              "name": "User sample name",
+              "email": "user-email@email.com"
+            }
+          }
+        }],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Email already exists"
+          }
+        }
+      },
+      "get": {
+        "tag": ["users"],
+        "summary": "List all users",
+        "description": "List all users",
+        "parameters": [{
+          "name": "user_id",
+          "in": "header",
+          "description": "ID admin user to list users",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tag": ["users"],
+        "summary": "Get a users",
+        "description": "Get a users",
+        "parameters": [{
+            "name": "user_id",
+            "in": "header",
+            "description": "ID admin user to list users",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID user to list",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tag": ["users"],
+        "summary": "Turn a user to admin",
+        "description": "Turn a user to admin",
+        "parameters": [{
+            "name": "user_id",
+            "in": "header",
+            "description": "ID admin user that request",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID user to turn to admin",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "created_at": {
+                        "type": "string"
+                      },
+                      "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      }
+    }
+  }
+}
